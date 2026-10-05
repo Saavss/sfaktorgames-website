@@ -1,5 +1,5 @@
 // SUPABASE AYARLARI
-// Buraya SADECE public / publishable key yazılır.
+// Burada sadece public / publishable key kullanılır.
 // Secret key veya service_role key ASLA tarayıcıya koyulmaz.
 
 const SUPABASE_URL = "https://wcgflxqyhrwanvkcyaxh.supabase.co";
