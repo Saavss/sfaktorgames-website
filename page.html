@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>SFAKTOR GAMES</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .content-page{width:min(980px,90vw);margin:0 auto;padding:150px 0 100px}
+    .content-page h1{font-size:clamp(2.8rem,7vw,5.5rem);line-height:.95;margin-bottom:26px}
+    .content-page .meta{color:#7fbfff;margin-bottom:36px}
+    .page-body{color:#c5d4e3;font-size:1.02rem;line-height:1.85;white-space:pre-wrap}
+    .page-error{padding:35px;border:1px solid #1d3b5c;background:#0c1724}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html" id="siteBrand">SFAKTOR <span>GAMES</span></a>
+  <nav>
+    <a href="index.html#games">Games</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="content-page">
+  <p class="eyebrow">SFAKTOR GAMES</p>
+  <h1 id="pageTitle">Yükleniyor...</h1>
+  <p id="pageDescription" class="meta"></p>
+  <article id="pageBody" class="page-body"></article>
+</main>
+
+<footer>
+  <a class="brand" href="index.html">SFAKTOR <span>GAMES</span></a>
+  <p>© <span id="year"></span> SFAKTOR GAMES.</p>
+</footer>
+
+<script src="assets/js/supabase-config.js"></script>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+(async()=>{
+  const slug=new URLSearchParams(location.search).get("slug");
+  if(!slug){
+    document.getElementById("pageTitle").textContent="Sayfa bulunamadı";
+    return;
+  }
+  const {data,error}=await db.from("pages").select("*").eq("slug",slug).eq("published",true).maybeSingle();
+  if(error||!data){
+    document.getElementById("pageTitle").textContent="Sayfa bulunamadı";
+    document.getElementById("pageBody").innerHTML='<div class="page-error">Bu sayfa bulunamadı veya henüz yayında değil.</div>';
+    return;
+  }
+  document.documentElement.lang=data.language||"tr";
+  document.title=data.title+" | SFAKTOR GAMES";
+  document.querySelector('meta[name="description"]').setAttribute("content",data.description||"");
+  document.getElementById("pageTitle").textContent=data.title;
+  document.getElementById("pageDescription").textContent=data.description||"";
+  document.getElementById("pageBody").textContent=data.body||"";
+  const {data:settings}=await db.from("site_settings").select("logo_url,favicon_url").eq("id",1).maybeSingle();
+  if(settings?.logo_url){
+    document.getElementById("siteBrand").innerHTML=`<img src="${settings.logo_url}" alt="SFAKTOR GAMES">`;
+  }
+  if(settings?.favicon_url){
+    const link=document.createElement("link");link.rel="icon";link.href=settings.favicon_url;document.head.appendChild(link);
+  }
+})();
+</script>
+</body>
+</html>

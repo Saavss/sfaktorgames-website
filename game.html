@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Game | SFAKTOR GAMES</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .detail-hero{position:relative;min-height:85vh;display:flex;align-items:flex-end;padding:150px 5vw 85px;overflow:hidden}
+    .detail-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+    .detail-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,15,.95),rgba(3,8,15,.52) 55%,rgba(3,8,15,.32)),linear-gradient(0deg,#050a10,transparent 56%)}
+    .detail-content{position:relative;z-index:2;width:min(750px,100%)}
+    .detail-logo{max-width:min(440px,75vw);max-height:190px;margin-bottom:25px}
+    .detail-content h1{font-size:clamp(3.5rem,9vw,7rem)}
+    .detail-copy{color:#bdd0e1;line-height:1.8;font-size:1.05rem}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .gallery img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:1px solid #183653;transition:.3s ease}
+    .gallery img:hover{transform:scale(1.02);border-color:#42b0ff}
+    @media(max-width:800px){.gallery{grid-template-columns:1fr}.detail-hero{min-height:75vh}}
+  </style>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow"></div>
+<header class="site-header">
+  <a class="brand" href="index.html" id="detailBrand">SFAKTOR <span>GAMES</span></a>
+  <nav><a href="index.html#games">Games</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a></nav>
+</header>
+
+<section class="detail-hero">
+  <div id="detailBg" class="detail-bg hero-no-image"></div>
+  <div class="detail-content">
+    <p id="detailStatus" class="eyebrow">SFAKTOR GAMES</p>
+    <div id="detailTitle"></div>
+    <div id="detailPlatforms" class="hero-badges"></div>
+    <p id="detailDescription" class="detail-copy"></p>
+    <div id="detailStores" class="hero-store-row"></div>
+  </div>
+</section>
+
+<main>
+  <section class="section reveal">
+    <div class="section-heading"><div><p class="eyebrow">ABOUT THE GAME</p><h2>Game Details</h2></div></div>
+    <div id="detailLong" class="about-text"></div>
+  </section>
+  <section id="gallerySection" class="section reveal hidden">
+    <div class="section-heading"><div><p class="eyebrow">GALLERY</p><h2>Screenshots</h2></div></div>
+    <div id="detailGallery" class="gallery"></div>
+  </section>
+</main>
+
+<footer>
+  <a class="brand" href="index.html">SFAKTOR <span>GAMES</span></a>
+  <p>© <span id="year"></span> SFAKTOR GAMES.</p>
+</footer>
+
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/effects.js"></script>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+const esc=v=>String(v||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const safeUrl=v=>{try{const u=new URL(v);return ["http:","https:"].includes(u.protocol)?u.href:"#"}catch{return "#"}};
+(async()=>{
+  const slug=new URLSearchParams(location.search).get("slug");
+  const {data:g,error}=await db.from("games").select("*").eq("slug",slug).maybeSingle();
+  if(error||!g){document.getElementById("detailTitle").innerHTML="<h1>Game not found.</h1>";return;}
+  document.title=g.title+" | SFAKTOR GAMES";
+  document.querySelector('meta[name="description"]').content=g.description||"";
+  document.getElementById("detailStatus").textContent=g.status||"SFAKTOR GAMES";
+  document.getElementById("detailDescription").textContent=g.description||"";
+  document.getElementById("detailLong").textContent=g.long_description||g.description||"";
+  document.getElementById("detailPlatforms").innerHTML=(g.platforms||[]).map(p=>`<span class="hero-badge">${esc(p)}</span>`).join("");
+  document.getElementById("detailTitle").innerHTML=g.logo_url?`<img class="detail-logo" src="${safeUrl(g.logo_url)}" alt="${esc(g.title)}">`:`<h1>${esc(g.title)}</h1>`;
+  const bg=g.banner_url||g.cover_url;if(bg){const d=document.getElementById("detailBg");d.classList.remove("hero-no-image");d.style.backgroundImage=`url('${safeUrl(bg)}')`;}
+  let stores="";if(g.google_play_url)stores+=`<a class="hero-store-btn" target="_blank" href="${safeUrl(g.google_play_url)}">Google Play</a>`;
+  if(g.app_store_url)stores+=`<a class="hero-store-btn" target="_blank" href="${safeUrl(g.app_store_url)}">App Store</a>`;
+  if(g.steam_url)stores+=`<a class="hero-store-btn" target="_blank" href="${safeUrl(g.steam_url)}">Steam</a>`;
+  if(g.trailer_url)stores+=`<a class="hero-detail-btn" target="_blank" href="${safeUrl(g.trailer_url)}">Watch Trailer ▶</a>`;
+  document.getElementById("detailStores").innerHTML=stores;
+  if(g.screenshots?.length){document.getElementById("gallerySection").classList.remove("hidden");document.getElementById("detailGallery").innerHTML=g.screenshots.map(x=>`<img src="${safeUrl(x)}" alt="${esc(g.title)} screenshot">`).join("");}
+  const {data:s}=await db.from("site_settings").select("*").eq("id",1).maybeSingle();
+  if(s?.logo_url)document.querySelectorAll(".brand").forEach(b=>b.innerHTML=`<img src="${safeUrl(s.logo_url)}" alt="SFAKTOR GAMES">`);
+})();
+</script>
+</body>
+</html>

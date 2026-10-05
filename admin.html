@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SFAKTOR GAMES Admin</title>
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div id="loginView" class="auth-shell">
+    <div class="auth-card">
+      <div class="admin-brand">SFAKTOR <span>GAMES</span></div>
+      <h1>Admin Paneli</h1>
+      <p>Site içeriğini yönetmek için giriş yap.</p>
+
+      <label>E-posta</label>
+      <input id="email" type="email" placeholder="admin@sfaktorgames.com">
+
+      <label>Şifre</label>
+      <input id="password" type="password" placeholder="••••••••">
+
+      <button id="loginBtn" class="primary">Giriş Yap</button>
+      <div id="loginMessage" class="message"></div>
+    </div>
+  </div>
+
+  <div id="dashboardView" class="dashboard hidden">
+    <aside class="sidebar">
+      <div class="admin-brand">SFAKTOR <span>GAMES</span></div>
+      <nav class="admin-nav">
+        <button class="nav-item active" data-tab="overview">Genel Bakış</button>
+        <button class="nav-item" data-tab="games">Oyunlar</button>
+        <button class="nav-item" data-tab="news">Haberler</button>
+        <button class="nav-item" data-tab="pages">Sayfalar</button>
+        <button class="nav-item" data-tab="settings">Site Ayarları</button>
+      </nav>
+      <button id="logoutBtn" class="logout">Çıkış Yap</button>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <span class="kicker">SFAKTOR GAMES</span>
+          <h2 id="pageTitle">Genel Bakış</h2>
+        </div>
+        <a href="index.html" target="_blank" class="view-site">Siteyi Gör ↗</a>
+      </header>
+
+      <section id="tab-overview" class="tab active">
+        <div class="stats">
+          <div class="stat"><span>Oyun</span><strong id="gameCount">0</strong></div>
+          <div class="stat"><span>Haber</span><strong id="newsCount">0</strong></div>
+          <div class="stat"><span>Durum</span><strong>Canlı</strong></div>
+        </div>
+        <div class="panel">
+          <h3>Yönetim Paneli</h3>
+          <p>Soldaki menüden oyunları, haberleri ve site metinlerini yönetebilirsin. Kaydettiğin değişiklikler ana sitede otomatik görünür.</p>
+        </div>
+      </section>
+
+      <section id="tab-games" class="tab">
+        <div class="section-actions">
+          <div>
+            <h3>Oyunlar</h3>
+            <p>Yeni oyun ekle veya mevcut oyunları düzenle.</p>
+          </div>
+          <button id="newGameBtn" class="primary small">+ Yeni Oyun</button>
+        </div>
+        <div id="gamesList" class="item-list"></div>
+
+        <div id="gameEditor" class="panel editor hidden">
+          <div class="editor-head">
+            <h3 id="gameEditorTitle">Oyun Düzenle</h3>
+            <button class="icon-btn" data-close="gameEditor">✕</button>
+          </div>
+
+          <input id="gameId" type="hidden">
+
+          <div class="grid2">
+            <div>
+              <label>Oyun Adı</label>
+              <input id="gameTitle" placeholder="Foodie Match: Travel">
+            </div>
+            <div>
+              <label>Slug / URL</label>
+              <input id="gameSlug" placeholder="foodie-match-travel">
+            </div>
+          </div>
+
+          <label>Kısa Açıklama</label>
+          <textarea id="gameDescription" rows="3"></textarea>
+
+          <div class="grid2">
+            <div>
+              <label>Durum</label>
+              <select id="gameStatus">
+                <option>Published</option>
+                <option>Coming Soon</option>
+                <option>In Development</option>
+              </select>
+            </div>
+            <div>
+              <label>Platformlar</label>
+              <input id="gamePlatforms" placeholder="Google Play, App Store, Steam">
+            </div>
+          </div>
+          <div class="grid2">
+            <div>
+              <label>Ana Sayfa Bannerında Göster</label>
+              <select id="gameFeatured">
+                <option value="true">Evet</option>
+                <option value="false">Hayır</option>
+              </select>
+            </div>
+            <div>
+              <label>Sıralama</label>
+              <input id="gameSortOrder" type="number" min="0" value="0">
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label>Google Play Linki</label>
+              <input id="gameGooglePlay" placeholder="https://play.google.com/...">
+            </div>
+            <div>
+              <label>App Store Linki</label>
+              <input id="gameAppStore" placeholder="https://apps.apple.com/...">
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label>Steam Linki</label>
+              <input id="gameSteam" placeholder="https://store.steampowered.com/...">
+            </div>
+            <div>
+              <label>Trailer / YouTube Linki</label>
+              <input id="gameTrailer" placeholder="https://youtube.com/...">
+            </div>
+          </div>
+
+          <label>Ana Sayfa Banner Görseli (yatay, önerilen 1920×900)</label>
+          <div class="upload-row">
+            <input id="gameBanner" placeholder="Banner görsel URL">
+            <input id="gameBannerFile" type="file" accept="image/*">
+            <button id="uploadGameBannerBtn" class="upload-btn" type="button">Yükle</button>
+          </div>
+
+          <label>Kapak Görseli</label>
+          <div class="upload-row">
+            <input id="gameCover" placeholder="Görsel URL">
+            <input id="gameCoverFile" type="file" accept="image/*">
+            <button id="uploadGameCoverBtn" class="upload-btn" type="button">Yükle</button>
+          </div>
+
+          <label>Oyun Logosu</label>
+          <div class="upload-row">
+            <input id="gameLogo" placeholder="Logo URL">
+            <input id="gameLogoFile" type="file" accept="image/*">
+            <button id="uploadGameLogoBtn" class="upload-btn" type="button">Yükle</button>
+          </div>
+
+          <label>Ekran Görüntüleri</label>
+          <div class="upload-row">
+            <input id="gameScreenshots" placeholder="URL'leri virgülle ayır">
+            <input id="gameScreenshotsFile" type="file" accept="image/*" multiple>
+            <button id="uploadGameScreenshotsBtn" class="upload-btn" type="button">Yükle</button>
+          </div>
+
+          <label>Uzun Açıklama</label>
+          <textarea id="gameLongDescription" rows="6"></textarea>
+
+          <div class="editor-actions">
+            <button id="deleteGameBtn" class="danger">Oyunu Sil</button>
+            <button id="saveGameBtn" class="primary">Kaydet</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-news" class="tab">
+        <div class="section-actions">
+          <div>
+            <h3>Haberler</h3>
+            <p>Duyuru ve güncellemeleri buradan yönet.</p>
+          </div>
+          <button id="newNewsBtn" class="primary small">+ Yeni Haber</button>
+        </div>
+        <div id="newsList" class="item-list"></div>
+
+        <div id="newsEditor" class="panel editor hidden">
+          <div class="editor-head">
+            <h3>Haber Düzenle</h3>
+            <button class="icon-btn" data-close="newsEditor">✕</button>
+          </div>
+
+          <input id="newsId" type="hidden">
+          <label>Başlık</label>
+          <input id="newsTitle">
+          <label>Kısa Açıklama</label>
+          <textarea id="newsExcerpt" rows="3"></textarea>
+          <label>İçerik</label>
+          <textarea id="newsContent" rows="7"></textarea>
+          <label>Kapak Görseli URL</label>
+          <input id="newsCover">
+          <div class="editor-actions">
+            <button id="deleteNewsBtn" class="danger">Haberi Sil</button>
+            <button id="saveNewsBtn" class="primary">Kaydet</button>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="tab-pages" class="tab">
+        <div class="section-actions">
+          <div>
+            <h3>Sayfalar</h3>
+            <p>Gizlilik politikası, kullanım koşulları, destek gibi yeni sayfalar oluştur.</p>
+          </div>
+          <button id="newPageBtn" class="primary small">+ Yeni Sayfa</button>
+        </div>
+
+        <div id="pagesList" class="item-list"></div>
+
+        <div id="pageEditor" class="panel editor hidden">
+          <div class="editor-head">
+            <h3>Sayfa Düzenle</h3>
+            <button class="icon-btn" data-close="pageEditor">✕</button>
+          </div>
+
+          <input id="contentPageId" type="hidden">
+
+          <div class="grid2">
+            <div>
+              <label>Sayfa Başlığı</label>
+              <input id="contentPageTitle" placeholder="Gizlilik Politikası">
+            </div>
+            <div>
+              <label>Sayfa URL / Slug</label>
+              <input id="contentPageSlug" placeholder="privacy-policy">
+            </div>
+          </div>
+
+          <label>Kısa Açıklama / SEO Description</label>
+          <textarea id="contentPageDescription" rows="3"></textarea>
+
+          <label>Sayfa İçeriği</label>
+          <textarea id="contentPageBody" rows="16" placeholder="Sayfa metnini buraya yaz..."></textarea>
+
+          <div class="grid2">
+            <div>
+              <label>Dil</label>
+              <select id="contentPageLanguage">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
+            <div>
+              <label>Durum</label>
+              <select id="contentPagePublished">
+                <option value="true">Yayında</option>
+                <option value="false">Taslak</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="editor-actions">
+            <button id="deletePageBtn" class="danger">Sayfayı Sil</button>
+            <button id="savePageBtn" class="primary">Kaydet / Yayınla</button>
+          </div>
+
+          <p class="helper">Yayınlanan sayfa adresi: <code>page.html?slug=privacy-policy</code></p>
+        </div>
+      </section>
+
+      <section id="tab-settings" class="tab">
+        <div class="panel editor">
+          <h3>Site Ayarları</h3>
+          <div class="grid2">
+            <div>
+              <label>Stüdyo Adı</label>
+              <input id="settingStudioName">
+            </div>
+            <div>
+              <label>İletişim E-postası</label>
+              <input id="settingEmail">
+            </div>
+          </div>
+          <label>Ana Başlık</label>
+          <input id="settingHeroTitle">
+          <label>Ana Açıklama</label>
+          <textarea id="settingHeroText" rows="3"></textarea>
+          <label>Hakkımızda</label>
+          <textarea id="settingAbout" rows="6"></textarea>
+
+          <h3 class="subhead">Marka Dosyaları</h3>
+
+          <label>Site Logosu</label>
+          <div class="upload-row">
+            <input id="settingLogo" placeholder="Logo URL">
+            <input id="settingLogoFile" type="file" accept="image/*">
+            <button id="uploadLogoBtn" class="upload-btn" type="button">Yükle</button>
+          </div>
+
+          <label>Favicon</label>
+          <div class="upload-row">
+            <input id="settingFavicon" placeholder="Favicon URL">
+            <input id="settingFaviconFile" type="file" accept="image/*">
+            <button id="uploadFaviconBtn" class="upload-btn" type="button">Yükle</button>
+          </div>
+
+          <h3 class="subhead">Sosyal Medya</h3>
+          <div class="grid2">
+            <div><label>YouTube</label><input id="settingYoutube" placeholder="https://youtube.com/..."></div>
+            <div><label>Instagram</label><input id="settingInstagram" placeholder="https://instagram.com/..."></div>
+          </div>
+          <label>Discord</label>
+          <input id="settingDiscord" placeholder="https://discord.gg/...">
+
+          <button id="saveSettingsBtn" class="primary">Ayarları Kaydet</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

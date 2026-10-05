@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SFAKTOR GAMES | We Create Worlds</title>
+  <meta name="description" content="SFAKTOR GAMES - Mobile and PC games built to be remembered.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html">SFAKTOR <span>GAMES</span></a>
+    <button class="menu-btn" aria-label="Menü">☰</button>
+    <div class="header-right">
+      <nav>
+        <a href="#games" data-i18n="nav_games">Oyunlar</a>
+        <a href="#about" data-i18n="nav_about">Hakkımızda</a>
+        <a href="#news" data-i18n="nav_news">Haberler</a>
+        <a href="#contact" data-i18n="nav_contact">İletişim</a>
+      </nav>
+      <div class="language-switcher">
+        <button class="lang-btn"><span id="currentLang">TR</span> ▾</button>
+        <div class="lang-menu">
+          <button data-lang="tr">Türkçe</button>
+          <button data-lang="en">English</button>
+          <button data-lang="de">Deutsch</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="homeSlider" class="hero-slider">
+      <div id="heroSlides" class="slides">
+        <div class="hero-slide active">
+          <div class="hero-slide-bg hero-no-image"></div>
+          <div class="hero-slide-inner">
+            <div class="hero-slide-copy">
+              <p class="eyebrow">SFAKTOR GAMES</p>
+              <h1>PLAY.<br><span>DISCOVER.</span><br>REPEAT.</h1>
+              <p class="hero-description">Oyunlarımız yükleniyor...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-ui">
+        <div id="sliderDots" class="slider-dots"></div>
+        <div class="slider-arrows">
+          <button id="sliderPrev" class="slider-arrow" aria-label="Önceki oyun">←</button>
+          <button id="sliderNext" class="slider-arrow" aria-label="Sonraki oyun">→</button>
+        </div>
+      </div>
+      <div id="sliderProgress" class="slider-progress"></div>
+    </section>
+
+    <div class="game-marquee" aria-hidden="true">
+      <div id="gameMarquee" class="game-marquee-track">
+        <div class="game-marquee-item">SFAKTOR GAMES</div>
+        <div class="game-marquee-item">MOBILE GAMES</div>
+        <div class="game-marquee-item">PC GAMES</div>
+        <div class="game-marquee-item">NEW WORLDS</div>
+        <div class="game-marquee-item">SFAKTOR GAMES</div>
+        <div class="game-marquee-item">MOBILE GAMES</div>
+        <div class="game-marquee-item">PC GAMES</div>
+        <div class="game-marquee-item">NEW WORLDS</div>
+      </div>
+    </div>
+
+    <section id="games" class="section games-showcase reveal">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow" data-i18n="our_titles">OYUNLARIMIZ</p>
+          <h2 data-i18n="games_title">Oyunlar</h2>
+        </div>
+        <p data-i18n="games_desc">SFAKTOR GAMES tarafından yayınlanan ve geliştirilmekte olan oyunlar.</p>
+      </div>
+
+      <div id="gamesGrid" class="games-grid"></div>
+    </section>
+
+    <section id="about" class="section about reveal">
+      <div class="about-copy">
+        <p class="eyebrow" data-i18n="about_eyebrow">HAKKIMIZDA</p>
+        <h2 data-i18n="about_title">Küçük ekip.<br>Büyük dünyalar.</h2>
+      </div>
+      <div>
+        <div class="about-text">
+        <p data-cms="about_text">SFAKTOR GAMES; erişilebilir, akılda kalıcı ve görsel kimliği güçlü oyunlar geliştiren bağımsız bir oyun stüdyosudur.</p>
+        <p data-i18n="about_p2">Mobil oyunlardan atmosferik PC projelerine kadar her oyunumuzu net bir fikir ve güçlü bir kimlik etrafında tasarlıyoruz.</p>
+      </div>
+        <div class="about-visual reveal reveal-delay-1">
+          <div class="about-sfaktor">SFAKTOR <span>GAMES</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="section reveal">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow" data-i18n="latest">SON GELİŞMELER</p>
+          <h2 data-i18n="news_title">Haberler</h2>
+        </div>
+      </div>
+      <div class="news-grid">
+        <article class="news-card">
+          <span data-i18n="news_badge1">Stüdyo Güncellemesi</span>
+          <h3 data-i18n="news_h1">SFAKTOR GAMES web sitesi yayında.</h3>
+          <p data-i18n="news_p1">Yeni oyunlarımızı, güncellemeleri ve duyuruları buradan takip edebilirsiniz.</p>
+        </article>
+        <article class="news-card muted">
+          <span data-i18n="news_badge2">Yakında</span>
+          <h3 data-i18n="news_h2">Yeni duyurular yolda.</h3>
+          <p data-i18n="news_p2">Yeni projeler duyuruldukça siteye eklenecek.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact reveal">
+      <p class="eyebrow" data-i18n="contact_eyebrow">İLETİŞİM</p>
+      <h2 data-i18n="contact_title">Akılda kalan işler üretelim.</h2>
+      <a class="btn btn-primary" data-cms="contact_email" href="mailto:contact@sfaktorgames.com">contact@sfaktorgames.com</a>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="index.html">SFAKTOR <span>GAMES</span></a>
+    <p>© <span id="year"></span> SFAKTOR GAMES. <span data-i18n="footer_rights">Tüm hakları saklıdır.</span></p>
+    <div>
+      <a href="#" data-i18n="privacy">Gizlilik</a>
+      <a href="#" data-i18n="terms">Koşullar</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/cms-public.js"></script>
+  <script src="assets/js/effects.js"></script>
+</body>
+</html>
