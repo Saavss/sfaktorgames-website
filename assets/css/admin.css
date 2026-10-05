@@ -33,3 +33,31 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}button{font:inh
 .subhead{margin-top:32px;padding-top:22px;border-top:1px solid var(--line)}
 .helper{font-size:.82rem!important}.helper code{color:#8fd1ff}
 @media(max-width:800px){.upload-row{grid-template-columns:1fr}}
+
+.lang-box{
+  margin-top:20px;
+  padding:18px;
+  border:1px solid #1d4368;
+  border-radius:12px;
+  background:#0a1725;
+}
+.lang-box-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+.lang-box-head strong{font-size:1rem}
+.lang-box-head span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:36px;
+  height:26px;
+  padding:0 8px;
+  border-radius:999px;
+  background:#0e3150;
+  color:#8fd1ff;
+  font-size:.72rem;
+  font-weight:800;
+}

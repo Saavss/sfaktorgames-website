@@ -66,7 +66,15 @@ window.editGame = (g)=>{
   $("gameId").value=g.id||"";
   $("gameTitle").value=g.title||"";
   $("gameSlug").value=g.slug||"";
-  $("gameDescription").value=g.description||"";
+  $("gameTitleTr").value=g.title_tr||"";
+  $("gameTitleEn").value=g.title_en||"";
+  $("gameTitleDe").value=g.title_de||"";
+  $("gameDescriptionTr").value=g.description_tr||g.description||"";
+  $("gameDescriptionEn").value=g.description_en||"";
+  $("gameDescriptionDe").value=g.description_de||"";
+  $("gameLongDescriptionTr").value=g.long_description_tr||g.long_description||"";
+  $("gameLongDescriptionEn").value=g.long_description_en||"";
+  $("gameLongDescriptionDe").value=g.long_description_de||"";
   $("gameStatus").value=g.status||"Published";
   $("gamePlatforms").value=(g.platforms||[]).join(", ");
   $("gameFeatured").value=String(g.featured ?? true);
@@ -79,7 +87,6 @@ window.editGame = (g)=>{
   $("gameCover").value=g.cover_url||"";
   $("gameLogo").value=g.logo_url||"";
   $("gameScreenshots").value=(g.screenshots||[]).join(", ");
-  $("gameLongDescription").value=g.long_description||"";
 };
 $("newGameBtn").addEventListener("click",()=>editGame({platforms:[]}));
 
@@ -88,7 +95,16 @@ $("saveGameBtn").addEventListener("click", async ()=>{
   const payload={
     title:$("gameTitle").value.trim(),
     slug:$("gameSlug").value.trim(),
-    description:$("gameDescription").value.trim(),
+    title_tr:$("gameTitleTr").value.trim()||null,
+    title_en:$("gameTitleEn").value.trim()||null,
+    title_de:$("gameTitleDe").value.trim()||null,
+    description_tr:$("gameDescriptionTr").value.trim()||null,
+    description_en:$("gameDescriptionEn").value.trim()||null,
+    description_de:$("gameDescriptionDe").value.trim()||null,
+    long_description_tr:$("gameLongDescriptionTr").value.trim()||null,
+    long_description_en:$("gameLongDescriptionEn").value.trim()||null,
+    long_description_de:$("gameLongDescriptionDe").value.trim()||null,
+    description:$("gameDescriptionTr").value.trim()||$("gameDescriptionEn").value.trim()||$("gameDescriptionDe").value.trim()||"",
     status:$("gameStatus").value,
     platforms:$("gamePlatforms").value.split(",").map(x=>x.trim()).filter(Boolean),
     featured:$("gameFeatured").value==="true",
@@ -101,7 +117,7 @@ $("saveGameBtn").addEventListener("click", async ()=>{
     cover_url:$("gameCover").value.trim()||null,
     logo_url:$("gameLogo").value.trim()||null,
     screenshots:$("gameScreenshots").value.split(",").map(x=>x.trim()).filter(Boolean),
-    long_description:$("gameLongDescription").value.trim()
+    long_description:$("gameLongDescriptionTr").value.trim()||$("gameLongDescriptionEn").value.trim()||$("gameLongDescriptionDe").value.trim()||""
   };
   const q = id ? db.from("games").update(payload).eq("id",id) : db.from("games").insert(payload);
   const {error}=await q;

@@ -1,5 +1,5 @@
-// SUPABASE AYARLARI
-// Burada sadece public / publishable key kullanılır.
+// SFAKTOR GAMES - SUPABASE AYARLARI
+// Burada yalnızca public / publishable key kullanılır.
 // Secret key veya service_role key ASLA tarayıcıya koyulmaz.
 
 const SUPABASE_URL = "https://wcgflxqyhrwanvkcyaxh.supabase.co";

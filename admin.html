@@ -79,7 +79,7 @@
 
           <div class="grid2">
             <div>
-              <label>Oyun Adı</label>
+              <label>Ana Oyun Adı / Fallback</label>
               <input id="gameTitle" placeholder="Foodie Match: Travel">
             </div>
             <div>
@@ -88,8 +88,35 @@
             </div>
           </div>
 
-          <label>Kısa Açıklama</label>
-          <textarea id="gameDescription" rows="3"></textarea>
+          <div class="lang-box">
+            <div class="lang-box-head"><strong>Türkçe</strong><span>TR</span></div>
+            <label>Oyun Adı (TR)</label>
+            <input id="gameTitleTr" placeholder="Boş bırakırsan ana oyun adı kullanılır">
+            <label>Kısa Açıklama (TR)</label>
+            <textarea id="gameDescriptionTr" rows="3"></textarea>
+            <label>Uzun Açıklama (TR)</label>
+            <textarea id="gameLongDescriptionTr" rows="5"></textarea>
+          </div>
+
+          <div class="lang-box">
+            <div class="lang-box-head"><strong>English</strong><span>EN</span></div>
+            <label>Game Title (EN)</label>
+            <input id="gameTitleEn" placeholder="Leave blank to use the main title">
+            <label>Short Description (EN)</label>
+            <textarea id="gameDescriptionEn" rows="3"></textarea>
+            <label>Long Description (EN)</label>
+            <textarea id="gameLongDescriptionEn" rows="5"></textarea>
+          </div>
+
+          <div class="lang-box">
+            <div class="lang-box-head"><strong>Deutsch</strong><span>DE</span></div>
+            <label>Spielname (DE)</label>
+            <input id="gameTitleDe" placeholder="Leer lassen = Haupttitel verwenden">
+            <label>Kurzbeschreibung (DE)</label>
+            <textarea id="gameDescriptionDe" rows="3"></textarea>
+            <label>Lange Beschreibung (DE)</label>
+            <textarea id="gameLongDescriptionDe" rows="5"></textarea>
+          </div>
 
           <div class="grid2">
             <div>
@@ -168,9 +195,6 @@
             <input id="gameScreenshotsFile" type="file" accept="image/*" multiple>
             <button id="uploadGameScreenshotsBtn" class="upload-btn" type="button">Yükle</button>
           </div>
-
-          <label>Uzun Açıklama</label>
-          <textarea id="gameLongDescription" rows="6"></textarea>
 
           <div class="editor-actions">
             <button id="deleteGameBtn" class="danger">Oyunu Sil</button>

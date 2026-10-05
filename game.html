@@ -65,20 +65,26 @@ const safeUrl=v=>{try{const u=new URL(v);return ["http:","https:"].includes(u.pr
   const slug=new URLSearchParams(location.search).get("slug");
   const {data:g,error}=await db.from("games").select("*").eq("slug",slug).maybeSingle();
   if(error||!g){document.getElementById("detailTitle").innerHTML="<h1>Game not found.</h1>";return;}
-  document.title=g.title+" | SFAKTOR GAMES";
-  document.querySelector('meta[name="description"]').content=g.description||"";
+  const lang=localStorage.getItem("sfaktor_lang")||"tr";
+  const pick=(field)=>g[`${field}_${lang}`]||g[field]||"";
+  const displayTitle=pick("title");
+  const displayDescription=pick("description");
+  const displayLong=pick("long_description")||displayDescription;
+  document.documentElement.lang=lang;
+  document.title=displayTitle+" | SFAKTOR GAMES";
+  document.querySelector('meta[name="description"]').content=displayDescription;
   document.getElementById("detailStatus").textContent=g.status||"SFAKTOR GAMES";
-  document.getElementById("detailDescription").textContent=g.description||"";
-  document.getElementById("detailLong").textContent=g.long_description||g.description||"";
+  document.getElementById("detailDescription").textContent=displayDescription;
+  document.getElementById("detailLong").textContent=displayLong;
   document.getElementById("detailPlatforms").innerHTML=(g.platforms||[]).map(p=>`<span class="hero-badge">${esc(p)}</span>`).join("");
-  document.getElementById("detailTitle").innerHTML=g.logo_url?`<img class="detail-logo" src="${safeUrl(g.logo_url)}" alt="${esc(g.title)}">`:`<h1>${esc(g.title)}</h1>`;
+  document.getElementById("detailTitle").innerHTML=g.logo_url?`<img class="detail-logo" src="${safeUrl(g.logo_url)}" alt="${esc(displayTitle)}">`:`<h1>${esc(displayTitle)}</h1>`;
   const bg=g.banner_url||g.cover_url;if(bg){const d=document.getElementById("detailBg");d.classList.remove("hero-no-image");d.style.backgroundImage=`url('${safeUrl(bg)}')`;}
   let stores="";if(g.google_play_url)stores+=`<a class="hero-store-btn" target="_blank" href="${safeUrl(g.google_play_url)}">Google Play</a>`;
   if(g.app_store_url)stores+=`<a class="hero-store-btn" target="_blank" href="${safeUrl(g.app_store_url)}">App Store</a>`;
   if(g.steam_url)stores+=`<a class="hero-store-btn" target="_blank" href="${safeUrl(g.steam_url)}">Steam</a>`;
   if(g.trailer_url)stores+=`<a class="hero-detail-btn" target="_blank" href="${safeUrl(g.trailer_url)}">Watch Trailer ▶</a>`;
   document.getElementById("detailStores").innerHTML=stores;
-  if(g.screenshots?.length){document.getElementById("gallerySection").classList.remove("hidden");document.getElementById("detailGallery").innerHTML=g.screenshots.map(x=>`<img src="${safeUrl(x)}" alt="${esc(g.title)} screenshot">`).join("");}
+  if(g.screenshots?.length){document.getElementById("gallerySection").classList.remove("hidden");document.getElementById("detailGallery").innerHTML=g.screenshots.map(x=>`<img src="${safeUrl(x)}" alt="${esc(displayTitle)} screenshot">`).join("");}
   const {data:s}=await db.from("site_settings").select("*").eq("id",1).maybeSingle();
   if(s?.logo_url)document.querySelectorAll(".brand").forEach(b=>b.innerHTML=`<img src="${safeUrl(s.logo_url)}" alt="SFAKTOR GAMES">`);
 })();

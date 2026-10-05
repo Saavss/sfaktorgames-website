@@ -135,3 +135,59 @@ adresindeki otomatik oyun detay sayfasına gidilir.
 - Header'ın scroll ile koyulaşması
 - Hafif cursor glow
 - Hareket hassasiyeti olan kullanıcılar için reduced-motion desteği
+
+
+# V4 — Çok Dilli Oyun İçerikleri
+
+Admin > Oyunlar > Oyunu Düzenle bölümünde artık her oyun için ayrı TR / EN / DE alanları bulunur.
+
+- Ana oyun adı / fallback
+- Türkçe oyun adı, kısa açıklama, uzun açıklama
+- English title, short description, long description
+- Deutscher Titel, Kurzbeschreibung, lange Beschreibung
+
+Site dili TR ise Türkçe, EN ise İngilizce, DE ise Almanca alanlar otomatik gösterilir.
+
+Bir dil boş bırakılırsa sistem ana `title`, `description` veya `long_description` alanını fallback olarak kullanır.
+
+## Mevcut Supabase projesi
+
+Güncellenmiş `supabase-schema.sql` dosyasını SQL Editor'da tekrar çalıştır.
+
+Komutlarda `add column if not exists` kullanıldığı için mevcut kayıtlar silinmez.
+
+
+# V5 FINAL — Mevcut Çalışan Sistemin Üzerine Güncelleme
+
+Bu paket mevcut çalışan SFAKTOR GAMES sisteminin devamıdır.
+
+Korunanlar:
+- Supabase projesi ve bağlantısı
+- admin@sfaktorgames.com hesabı
+- Admin paneli
+- mevcut admin şifresi (şifre Supabase Authentication'da kalır; bu dosyalarda tutulmaz)
+- hareketli ana sayfa slider/banner
+- Google Play / App Store / Steam bağlantıları
+- oyun detay sayfaları
+- ekran görüntüsü galerileri
+- logo ve favicon yükleme
+- haber yönetimi
+- yeni sayfa oluşturma
+- Supabase Storage görsel yükleme
+- site efektleri ve animasyonlar
+- TR / EN / DE genel site dil sistemi
+
+Eklenen / güncellenen:
+- oyunlarda ayrı TR / EN / DE başlık, kısa açıklama ve uzun açıklama
+- mevcut Supabase URL + publishable key paket içinde hazır
+- yazma/yükleme yetkisi sadece admin@sfaktorgames.com hesabına sınırlandı
+
+## ÖNEMLİ
+Bu güncelleme admin kullanıcını veya şifreni değiştirmez.
+Admin şifresi Supabase Authentication > Users tarafında kalır.
+
+## Güncelleme Sırası
+1. GitHub'daki site dosyalarını bu paketteki dosyalarla güncelle.
+2. Supabase > SQL Editor'da bu paketteki `supabase-schema.sql` dosyasını çalıştır.
+3. SQL mevcut kayıtları silmez; yeni dil kolonlarını ekler ve güvenlik policy'lerini günceller.
+4. Siteyi ve admin panelini Ctrl+F5 ile yenile.

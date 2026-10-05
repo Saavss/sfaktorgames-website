@@ -56,17 +56,17 @@ function renderHeroSlider(games){
     const bgStyle=bg?`style="background-image:url('${safeUrl(bg)}')"`:"";
     const platforms=(g.platforms||[]).map(p=>`<span class="hero-badge">${safe(p)}</span>`).join("");
     const title=g.logo_url
-      ? `<img class="hero-game-logo" src="${safeUrl(g.logo_url)}" alt="${safe(g.title)}">`
-      : `<h1>${safe(g.title)}</h1>`;
+      ? `<img class="hero-game-logo" src="${safeUrl(g.logo_url)}" alt="${safe(localizedGame(g,"title"))}">`
+      : `<h1>${safe(localizedGame(g,"title"))}</h1>`;
     return `
       <article class="hero-slide ${i===0?"active":""}" data-index="${i}">
-        <a href="${gamePageUrl(g)}" class="hero-slide-bg ${bg?"":"hero-no-image"}" ${bgStyle} aria-label="${safe(g.title)}"></a>
+        <a href="${gamePageUrl(g)}" class="hero-slide-bg ${bg?"":"hero-no-image"}" ${bgStyle} aria-label="${safe(localizedGame(g,"title"))}"></a>
         <div class="hero-slide-inner">
           <div class="hero-slide-copy">
             <p class="eyebrow">${safe(g.status||"SFAKTOR GAMES")}</p>
             ${title}
             <div class="hero-badges">${platforms}</div>
-            <p class="hero-description">${safe(g.description||"")}</p>
+            <p class="hero-description">${safe(localizedGame(g,"description"))}</p>
             <div class="hero-store-row">
               <a class="hero-detail-btn" href="${gamePageUrl(g)}">Oyunu İncele →</a>
               ${storeLinks(g)}
@@ -92,8 +92,8 @@ function renderGameGrid(games){
         ${g.cover_url?`style="background-image:linear-gradient(to top,rgba(0,0,0,.94),rgba(0,0,0,.08)),url('${safeUrl(g.cover_url)}')"`:""}></a>
       <div class="game-content">
         <p class="eyebrow">${safe(g.status||"")}</p>
-        <h3><a href="${gamePageUrl(g)}">${safe(g.title)}</a></h3>
-        <p>${safe(g.description||"")}</p>
+        <h3><a href="${gamePageUrl(g)}">${safe(localizedGame(g,"title"))}</a></h3>
+        <p>${safe(localizedGame(g,"description"))}</p>
         <div class="platforms">${(g.platforms||[]).map(p=>`<span class="platform">${safe(p)}</span>`).join("")}</div>
         <div class="card-store-links">
           <a href="${gamePageUrl(g)}">Oyunu İncele →</a>
@@ -107,11 +107,20 @@ function renderGameGrid(games){
 function renderMarquee(games){
   const track=document.getElementById("gameMarquee");
   if(!track)return;
-  const names=[...games.map(g=>g.title),...games.map(g=>g.title)];
+  const names=[...games.map(g=>localizedGame(g,"title")),...games.map(g=>localizedGame(g,"title"))];
   track.innerHTML=names.map(name=>`<div class="game-marquee-item">${safe(name)}</div>`).join("");
 }
 
 function safe(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function safeUrl(v=""){try{const u=new URL(v);return ["http:","https:"].includes(u.protocol)?u.href:"#"}catch{return "#"}}
+
+
+function currentSiteLang(){
+  return localStorage.getItem("sfaktor_lang") || document.documentElement.lang || "tr";
+}
+function localizedGame(g, field){
+  const lang=currentSiteLang();
+  return g[`${field}_${lang}`] || g[field] || "";
+}
 
 document.addEventListener("DOMContentLoaded",loadCmsContent);
