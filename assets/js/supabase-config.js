@@ -1,10 +1,8 @@
 // SUPABASE AYARLARI
-// Supabase > Project Settings > API ekranındaki değerleri buraya yaz.
-//
-// ÖNEMLİ: Buraya SADECE public anon key yazılır.
-// service_role key ASLA tarayıcıya koyulmaz.
+// Buraya SADECE public / publishable key yazılır.
+// Secret key veya service_role key ASLA tarayıcıya koyulmaz.
 
-const SUPABASE_URL = "BURAYA_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "BURAYA_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://wcgflxqyhrwanvkcyaxh.supabase.co";
+const SUPABASE_ANON_KEY = "BURAYA_SUPABASE_PUBLISHABLE_KEY";
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
