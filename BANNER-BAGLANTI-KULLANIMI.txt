@@ -1,0 +1,10 @@
+BANNER BAĞLANTISI (İSTEĞE BAĞLI)
+
+Admin paneli > Banner Yönetimi > Yeni Banner veya Düzenle
+
+- "Bu bannera tıklama bağlantısı ekle" kapalı: Banner yalnızca görsel, logo, başlık ve açıklamayı gösterir. Yönlendirme butonu yoktur.
+- Seçenek açık: Bağlantı adresini gir. Bannerda Detayları Gör / Learn more düğmesi görünür.
+- Her bannerın bağlantı ayarı birbirinden bağımsızdır.
+- Önceden bağlantısı olan bannerlarda seçenek otomatik açık gelir.
+
+GitHub ZIP dışa aktarma sistemi ve önceki oyun kayıtları korunmuştur.

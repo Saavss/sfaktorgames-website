@@ -1,0 +1,10 @@
+SFAKTOR GAMES — YENI TASARIM
+
+- Daha kısa sinematik slider
+- Geniş yatay oyun kartları; tüm karta tıklayınca detay açılır
+- Hover, derinlik ve ışık efektleri
+- Admin panelindeki YouTube Trailer alanına bağlantı girildiğinde detay sayfasında gömülü video
+- Telefon ve tablet düzenleri
+- Python gerektirmeyen mevcut yerel admin sistemi korunmuştur
+
+NOT: Gerçek oyun görselleri eklenmeden boş kartlar fotoğraflı görünmez. YouTube oynatıcısı için internet gerekir.

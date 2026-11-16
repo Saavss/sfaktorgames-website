@@ -1,0 +1,20 @@
+SFAKTOR GAMES - PYTHON GEREKTIRMEYEN ADMIN
+
+1. ZIP dosyasini cikar.
+2. SITE klasorune gir.
+3. ADMIN-BASLAT.html dosyasini Google Chrome veya Microsoft Edge ile ac.
+4. Admin Panelini Ac > Site Klasorunu Sec ve Baslat'a tikla.
+5. index.html dosyasinin bulundugu SITE klasorunu sec ve erisime izin ver.
+6. Oyun, haber, sayfa ve gorselleri ekle; kaydet.
+7. Siteyi ZIP Olarak Disa Aktar butonuna bas.
+8. Olusan ZIP'i ac; ICINDEKI dosyalari GitHub deponun kokune yukle.
+
+NOTLAR
+- Python, Node.js, veritabani veya ucretli servis gerekmez.
+- Chrome/Edge'in guncel surumunu kullan. Firefox desteklenmez.
+- Admin'i file:// ile acmak desteklenen tarayicilarda calisir.
+- Yayinda admin paneli bulunmaz.
+- Yedek icin SITE/data ve SITE/assets/uploads klasorlerini sakla.
+- GitHub Pages statik dosya sunar. Degisiklikler GitHub'a otomatik gitmez.
+- Siteyi onizlemek icin GitHub Pages'e yukleyip acabilirsin.
+- Windows EXE degildir: cift tiklanarak acilan HTML baslaticidir.

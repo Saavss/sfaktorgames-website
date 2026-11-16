@@ -1,0 +1,9 @@
+SFAKTOR GAMES - Banner Düzeltmesi
+
+- Banner tek, taşma yapmayan yuvarlatılmış alan içinde.
+- Banner altındaki oyun isimleri kayan şerit (game-marquee) kaldırıldı.
+- Oyun logosu, slogan ve kısa açıklama aynı alanın içinde.
+- TR/EN/DE metinler korunuyor.
+- Yatay kayan banner mekanizması korunuyor.
+- Sadece 1 oyun varsa oklar ve sıra noktaları gizlenir.
+- GitHub ZIP oluşturma ve Python gerektirmeyen admin korunur.

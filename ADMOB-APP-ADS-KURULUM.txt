@@ -1,0 +1,12 @@
+SFAKTOR GAMES / AdMob app-ads.txt KURULUMU
+
+1. SITE/app-ads.txt dosyasi, AdMob tarafindan verilen satiri icerir.
+2. ADMIN-BASLAT.html dosyasindan projeyi yonetin. "Siteyi ZIP Olarak Disa Aktar" ile uretilen yayin ZIP'i, app-ads.txt dosyasini da kok dizine dahil eder.
+3. GitHub Pages icin ZIP icindeki dosyalari deponun yayinlanan kok dizinine yerlestirin; SITE klasorunu tek klasor olarak yuklemeyin.
+4. Ozel alan adiniz varsa https://ALANADINIZ/app-ads.txt adresinden dosyayi acarak kontrol edin.
+5. GitHub Pages proje adresi https://kullanici.github.io/depo/ ise, /depo/app-ads.txt dosyasinin acilmasi yeterli olmayabilir: AdMob geliştirici web sitesinin alan adi kokunu (/app-ads.txt) tarar. Kendi alan adinizi ya da uygun kullanici sitesi yapisini kullanin.
+6. Google Play Console'da oyunun Gelistirici web sitesi adresiyle yayindaki alan adinin eslestigini kontrol edin.
+7. AdMob dogrulamasi icin en az 24 saat bekleyin.
+
+app-ads.txt satiri:
+google.com, pub-8236141445070695, DIRECT, f08c47fec0942fa0
